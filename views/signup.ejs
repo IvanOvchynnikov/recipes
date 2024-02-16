@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Login Page</title>
+</head>
+<body>
+<div class="container">
+    <form method="POST" id="signUpForm">
+        <p>Create an username</p>
+        <input type="text" name="username" required/>
+        <p>Create a password</p>
+        <input type="password" name="password" required/>
+        <p>Confirm a password</p>
+        <input type="password" name="confirmed_password" required/>
+        <div>
+            <button class="create__account">Create an account</button>
+        </div>
+    </form>
+</div>
+<script>
+    const create_acc = document.querySelector('.create__account');
+    const password = document.querySelector('[name="password"]');
+    const confirmed_password = document.querySelector('[name="confirmed_password"]');
+    document.querySelector("#signUpForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (password.value === confirmed_password.value) {
+            const form = e.target;
+            const formData = new FormData(form);
+            fetch('/signup', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                window.location.href = response.url
+            })
+        }
+
+    })
+</script>
+</body>
+</html>

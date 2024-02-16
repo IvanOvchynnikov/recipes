@@ -10,6 +10,7 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}));
 
+const dataBase = []
 
 const startApp = async () => {
     try {
@@ -22,7 +23,7 @@ const startApp = async () => {
 }
 
 app.get('/login', (req, res) => {
-    res.render('login.ejs',{
+    res.render('login.ejs', {
         authenticationFailed: false
     });
 })
@@ -36,6 +37,17 @@ app.post('/login', (req, res) => {
     } else {
         res.redirect('/home')
     }
+})
+
+app.get('/signup', (req, res) => {
+    res.render('signup.ejs');
+})
+
+app.post('/signup', (req, res) => {
+    const data = req.body
+    dataBase.push(data);
+    console.log('vrrrv');
+    res.redirect('/login');
 })
 
 startApp();

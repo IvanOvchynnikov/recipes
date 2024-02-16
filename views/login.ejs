@@ -9,29 +9,32 @@
     <title>Login Page</title>
 </head>
 <body>
-<form method="POST">
-    <p>Username</p>
-    <input type="text" name="username" required/>
-    <p>Password</p>
-    <input type="password" name="password" required/>
-    <div>
-        <button type="submit">Log in</button>
-        <button>Sign up</button>
+<div class="container">
+    <form method="POST" id="loginForm">
+        <p>Username</p>
+        <input type="text" name="username" required/>
+        <p>Password</p>
+        <input type="password" name="password" required/>
+        <div>
+            <button type="submit">Log in</button>
+            <button><a href="http://localhost:5050/signup">Sign up</a></button>
+        </div>
+    </form>
+    <div class="modal">
+        <div class="window">
+            <button class="window__close">x</button>
+            <p>The provided username or password is not correct.</p>
+            <p>Check your data or sign up.</p>
+        </div>
     </div>
-</form>
-<div class="modal">
-    <div class="window">
-        <button class="window__close">x</button>
-        <p>The provided username or password is not correct.</p>
-        <p>Check your data or sign up.</p>
-    </div>
+    <% if(authenticationFailed){ %>
+        <script>
+            let modal = document.querySelector('.modal');
+            modal.style.display='flex'
+            modal.style.opacity=1
+        </script>
+    <% } %>
 </div>
-<% if (authenticationFailed){ %>
-    <script>
-        const modal = document.querySelector('.modal')
-        modal.style.display = 'flex'
-        modal.style.opacity = 1
-    </script>
-<% } %>
+<script src="script/script.js"></script>
 </body>
 </html>
