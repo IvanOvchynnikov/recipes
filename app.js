@@ -10,7 +10,7 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}));
 
-const dataBase = []
+const dataBase = {}
 
 const startApp = async () => {
     try {
@@ -30,7 +30,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
     const data = req.body
-    if (data.username !== "Ivan" || data.password !== "1212") {
+    if (dataBase[data.username] !== data.password) {
         res.render('login.ejs', {
             authenticationFailed: true
         })
@@ -45,8 +45,7 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', (req, res) => {
     const data = req.body
-    dataBase.push(data);
-    console.log('vrrrv');
+    dataBase[`${req.body.username}`] = req.body.password;
     res.redirect('/login');
 })
 
