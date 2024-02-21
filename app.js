@@ -80,16 +80,17 @@ app.get('/signup', (req, res) => {
 app.post('/signup', async (req, res) => {
     let username = req.body.username
     let password = req.body.password
-    const userData = new userModel({
-        username: username,
-        password: password
-    })
     if (await checkUsername(username) === null) {
+        const userData = new userModel({
+            username: username,
+            password: password
+        })
         userData.save();
         res.redirect('/login');
     } else {
-        res.status('301');
+        res.status(400).send({
+            message: 'Provided username is already taken, please choose another one!'
+        })
     }
 
 })
-

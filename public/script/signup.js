@@ -1,4 +1,7 @@
 document.querySelector('.window__close').addEventListener('click', (e) => {
+    console.log('click')
+    const error= document.querySelector('.window').lastElementChild;
+    document.querySelector('.window').removeChild(error);
     document.querySelector('.modal').style.display = 'none'
     document.querySelector('.modal').style.opacity = 0
 })
@@ -20,12 +23,22 @@ document.querySelector("#signUpForm").addEventListener("submit", (e) => {
         }).then(response => {
             if (response.ok) {
                 window.location.href = response.url
-            } else {
-                throw response;
+            } else if (response.status === 400) {
+                response.json().then(res=>{
+                    createModal(res.message);
+                })
             }
         })
     } else {
-        document.querySelector('.modal').style.display = 'flex'
-        document.querySelector('.modal').style.opacity = 1
+       createModal('Passwords are not identical!')
     }
 })
+const createModal = (message)=>{
+    document.querySelector('.modal').style.display = 'flex'
+    document.querySelector('.modal').style.opacity = 1
+
+    const error = document.createElement('p');
+    error.textContent = message;
+
+    document.querySelector('.window').appendChild(error);
+}
