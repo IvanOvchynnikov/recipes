@@ -57,7 +57,7 @@ app.post('/login', async (req, res) => {
         const user = await checkUsername(req.body.username)
         if (user !== null) {
             if (user.password === req.body.password) {
-                res.redirect('/home')
+                res.redirect('/home/' + encodeURIComponent(req.body.username));
             } else {
                 res.render('login.ejs', {
                     authenticationFailed: true
@@ -92,5 +92,9 @@ app.post('/signup', async (req, res) => {
             message: 'Provided username is already taken, please choose another one!'
         })
     }
-
 })
+
+app.get('/home/:username', (req, res) => {
+    res.render('home.ejs')
+})
+
